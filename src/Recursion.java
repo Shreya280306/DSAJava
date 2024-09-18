@@ -42,14 +42,14 @@ public class Recursion {
         printFibSeriesRecFn(n-2, 0, 1);
     }
 
-    int largestNumber(int[] arr, int index, int maximum){
+    int largestNumberWithRecursion(int[] arr, int index, int maximum){
         if (index == 0){
             return maximum;
         }
         if (arr[index] > maximum){
             maximum = arr[index];
         }
-        return largestNumber(arr, index - 1, maximum);
+        return largestNumberWithRecursion(arr, index - 1, maximum);
     }
 
     int sumWithRecursion(int n, int sum){
@@ -59,6 +59,34 @@ public class Recursion {
         sum = sum + n;
         int x = sumWithRecursion(n-1, sum);
         return x;
+    }
+
+    public static String reverseStringwithRecursion(String str, int index, String newStr){
+    if (index == str.length()){
+        return newStr;
+        }
+        newStr = str.charAt(index) + newStr;
+        return reverseStringwithRecursion(str, index+1, newStr);
+    }
+
+    public static boolean isArraySortedRec(int[] arr, int index){
+        if (index == arr.length){
+            return true;
+        }
+        if (index == arr.length-1){
+            if (arr[index-1] > arr[index-2]){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        if (arr[index] < arr[index+1]){
+            return isArraySortedRec(arr, index+1);
+        }
+        else{
+            return false;
+        }
     }
 
 }
