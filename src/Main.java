@@ -1,35 +1,30 @@
+import static java.util.EnumSet.range;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-//        String x = Recursion.reverseStringwithRecursion("abcdef", 0, "");
+//        int[] arr = new int[]{2,1,1,3,3,4};
+//        TwoPointerApproach.removeDuplicates(arr);
+
+//        boolean x = TwoPointerApproach.isStringPalindrome("abcdcba");
 //        System.out.println(x);
 
-//        int[] arr = {1,2,3,4,2};
-//        boolean sort = Recursion.isArraySortedRec(arr, 0);
-//        System.out.println(sort);
+//        int[] arr = new int[]{1,2,3,4,5,6,7};
+//        TwoPointerApproach.twoSum(arr, 2);
 
-//        int[] x = FrequencyArray.frequencyArr(1234523);
-//        for (int i=0; i<10; i++){
-//            System.out.print(x[i]);
-//        }
+//        int[] arr = new int[]{2,0,1, 3, 0, 0, 5, 0, 0, 0, 2};
+//        TwoPointerApproach.zeroesToTheEnd(arr);
 
-//        int[] x = FrequencyArray.charFrequencyArray("abcabs");
-//        for(int i=0; i< x.length; i++){
-//            System.out.print(x[i]);
-//        }
+        //TwoPointerApproach.distinctSubstring("aabbbcccd", 2);
 
-//        boolean result = FrequencyArray.ifTwoStringsAreAnagrams();
-//        System.out.println(result);
+        TwoPointerApproach.longestSubstringOfk("abc", 2);
 
-//        char x = FrequencyArray.firstNonRepeatingChar();
-//        System.out.println(x);
+        //TwoPointerApproach.longestSubstring("aaabbc");
 
-        boolean result = FrequencyArray.isStringPalindromePermutation("abcba");
-           System.out.println(result);
-
-//        int[] elementsWithoutZero = FrequencyArray.charFreqArrGreaterThanZero("baab");
-//        for(int i=0; i<elementsWithoutZero.length; i++){
-//            System.out.print(elementsWithoutZero[i] + " ");
-        }
+        //TwoPointerApproach.zeroesToTheEnd();
     }
+}
+
+
+

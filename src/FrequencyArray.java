@@ -20,6 +20,7 @@ public class FrequencyArray {
             char currentElement = word.charAt(i);
             frequencyArray[currentElement - 'a'] += 1;
         }
+        // for printing the frequency array
         for (int i = 0; i < frequencyArray.length; i++) {
             if (frequencyArray[i] > 0) {
                 int charNum = 97 + i;
@@ -40,7 +41,7 @@ public class FrequencyArray {
     }
 
     public static int[] charFrequencyArray(String word) {
-        int[] frequencyArray = new int[3];
+        int[] frequencyArray = new int[26];
         for (int i = 0; i < word.length(); i++) {
             char currentElement = word.charAt(i);
             frequencyArray[currentElement - 'a'] += 1;
@@ -58,10 +59,10 @@ public class FrequencyArray {
         return elementsWithoutZero;
     }
 
-    public static boolean ifTwoStringsAreAnagrams() {
-        int[] x1 = charFrequencyArray("awestaw");
-        int[] x2 = charFrequencyArray("sewwaa");
-        if (x1.length != x2.length) {
+    public static boolean ifTwoStringsAreAnagrams(String str1, String str2) {
+        int[] x1 = charFrequencyArray(str1);
+        int[] x2 = charFrequencyArray(str2);
+        if (str1.length() != str2.length()) {
             return false;
         }
         for (int i = 0; i < x1.length; i++) {
@@ -72,40 +73,102 @@ public class FrequencyArray {
         return true;
     }
 
-    public static char firstNonRepeatingChar() {
-        int[] x = charFrequencyArray("awedweda");
-        for (int i = 0; i < x.length; i++) {
-            if (x[i] == 1) {
-                int val = 97+i;
-                char ch = (char)val;
-                return ch;
+    public static char firstNonRepeatingChar(String str) {
+        int[] x = charFrequencyArray(str);
+        for (int i = 0; i < str.length(); i++) {
+            if (x[str.charAt(i) - 'a'] == 1) {
+                return str.charAt(i);
             }
         }
         return '0';
     }
 
     public static boolean isStringPalindromePermutation(String str){
-        int[] x = charFreqArrGreaterThanZero(str);
-        if ((str.length()%2) == 0){
-            for (int i=0; i<str.length(); i++){
-                if (x[i] != 2){
-                    return false;
-                }
-                return true;
-            }
-        }
-        else{
-            for (int i=0; i<str.length(); i++){
-                if (str.charAt(str.length()/2) != 1){
-                    return false;
-                }
-                if (str.charAt(i) != 2){
+        int[] x = charFrequencyArray(str);
+        if ((str.length() % 2) == 0){
+            for (int i=0; i<x.length; i++){
+                if (x[i] % 2 != 0){
                     return false;
                 }
             }
             return true;
         }
-        return true;
+        else{
+            int oddCount = 0;
+            for (int i=0; i<x.length; i++){
+                if (x[i] % 2 == 1){
+                    oddCount ++;
+                    if (oddCount > 1){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 
+    public static void intersectionOfTwoArrays(String str1, String str2){
+        int[] arr1 = charFrequencyArray(str1);
+        int[] arr2 = charFrequencyArray(str2);
+        for (int i=0; i<arr1.length; i++){
+            char ch = (char)(97+i);
+            if(arr1[i] != 0 && arr2[i] != 0){
+                if(arr2[i] >= arr1[i]){
+                    System.out.print(ch);
+                }
+            }
+        }
+    }
+
+    public static void elementsMoreThanHalf(String str){
+        int[] arr = charFrequencyArray(str);
+        int half = str.length()/2;
+        for(int i=0; i<arr.length; i++){
+            if (arr[i] > half){
+                System.out.println(arr[i]);
+            }
+        }
+    }
+
+    public static void intersectionOfArrays(String string, String substring){
+        int[] arr1 = charFrequencyArray(string);
+        int[] arr2 = charFrequencyArray(substring);
+        for(int i=0; i<arr1.length; i++){
+            char ch = (char)(i+97);
+            if(arr1[i]>0 && arr2[i]>0) {
+                if (arr2[i] <= arr1[i]) {
+                    System.out.print(ch);
+                }
+            }
+        }
+    }
+
+    public static void duplicateElements(String str){
+        int[] arr = charFrequencyArray(str);
+        for (int i=0; i<arr.length; i++){
+            char ch = (char)(97+i);
+            if(arr[i]>1){
+                System.out.print(ch);
+            }
+        }
+    }
+
+    public static void mostFrequentElement(String str){
+        int[] arr = charFrequencyArray(str);
+        int frequent = largestElementInArray(arr);
+        char ch = (char)(frequent+97+1);
+        System.out.println(ch);
+    }
+
+    public static int largestElementInArray(int[] arr){
+        int largest = arr[0];
+        int counter = 0;
+        for(int i=0; i<arr.length-1; i++){
+            if(arr[i+1] > largest){
+                largest = arr[i+1];
+                counter = i;
+            }
+        }
+        return counter;
+    }
 }
