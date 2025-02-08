@@ -1,4 +1,5 @@
 public class Arrays {
+
     static void numberIntoArray(int number) {
         //first function
         int[] array = new int[10];

@@ -1,4 +1,7 @@
 public class Recursion {
+    //In all these questions a loop is being replaced with recursion and any value that needs to be updated after every iteration is passed as a parameter
+    //If there's any code that needs to be writte in the function before the loop such that it should be executed only once then it can be written in a seperate helper function
+    //which calls our main function. Even the parameters that the user doesn't pass but are needed and updated within the code can be passed in this function
     void printNum(int n) {
         if (n == 0)
             return;
@@ -57,8 +60,7 @@ public class Recursion {
             return sum;
         }
         sum = sum + n;
-        int x = sumWithRecursion(n - 1, sum);
-        return x;
+        return sumWithRecursion(n - 1, sum);
     }
 
     public static String reverseStringwithRecursion(String str, int index, String newStr) {

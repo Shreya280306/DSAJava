@@ -1,7 +1,14 @@
-import java.lang.management.MonitorInfo;
-
-public class BinarySearch {
+    public class BinarySearch {
     //Array passed in this function is sorted
+
+    /**
+     * Problem: Find the index of the element in an array using binary search
+     * Approach: We take 3 pointers start, end, middle. If the element is equal to any of these then it returns the insdex. If its in the first half then it reduces
+     *           the size of the array considering only the first half and same if element is prs=esent in the second half. This loop repeats till the element is found
+     * @param arr
+     * @param element
+     * @return
+     */
     public boolean binarySearch(int[] arr, int element) {
         boolean found = false;
         int start = 0;
@@ -23,26 +30,12 @@ public class BinarySearch {
         return found;
     }
 
-    public static boolean elementToBeFound(int[] arr, int element){
-        int start = 0;
-        int end = arr.length-1;
-        int middle = (start+end)/2;
-        while(start<end){
-            if (element == arr[start] || element == arr[end] || element == arr[middle]){
-                return true;
-            }
-            if (element>start && element<middle){
-                end = middle-1;
-                middle = (start+end)/2;
-            }
-            else{
-                start = middle+1;
-                middle = (start+end)/2;
-            }
-        }
-        return false;
-    }
-
+    /**
+     * Problem: Find the square root of a given number in the array
+     * Approach: Previously the element was being checked for which region it belongs in, now (middle*middle) will be compared with num to find which region it belongs in
+     * @param num
+     * @return
+     */
     public static int squareRoot(int num){
         int start = 0;
         int end = num/2;
@@ -87,7 +80,18 @@ public class BinarySearch {
         return middle;
     }
 
+    /**
+     * Problem: Find the missing number in continous array
+     * Approach: If the difference between the middle and one before is greater than 1
+     *           then the number missing is between them, same for middle and element after that.
+     *           Otherwise if the difference between the last and middle is equal to middle+1,
+     *           the array is continous in the second part and number is missing in the first.
+     *           Same applies for the first half. In this case we keep cutting the array in half
+     * @param arr
+     * @return
+     */
     public static int missingNoInContinousArray(int[]arr){
+        //Here an array with continous series of numbers is passed with one element missing
         int start=0;
         int end=arr.length-1;
         int middle=(start+end)/2;
@@ -98,7 +102,7 @@ public class BinarySearch {
             if(arr[middle+1]-arr[middle] > 1){
                 return arr[middle]+1;
             }
-            if(arr[end]-arr[middle]==middle+1){
+            if(arr[end]-arr[middle] == middle+1){
                 // second half is continous-discard
                 end = middle;
                 middle = (start+end)/2;
@@ -111,6 +115,14 @@ public class BinarySearch {
         }
         return middle+1;
     }
+
+    /**
+     * Problem: Are there any two numbers in the array whose sum is equal to the number passed
+     * Approach: Keep reducing the array in half with the condition that compares sum found and number given as input
+     * @param arr
+     * @param num
+     * @return
+     */
     public static boolean sumInArray(int[]arr, int num){
         int start = 0;
         int end = arr.length-1;
