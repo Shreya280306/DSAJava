@@ -1,7 +1,13 @@
 public class Recursion {
     //In all these questions a loop is being replaced with recursion and any value that needs to be updated after every iteration is passed as a parameter
-    //If there's any code that needs to be writte in the function before the loop such that it should be executed only once then it can be written in a seperate helper function
+    //If there's any code that needs to be written in the function before the loop such that it should be executed only once then it can be written in a seperate helper function
     //which calls our main function. Even the parameters that the user doesn't pass but are needed and updated within the code can be passed in this function
+
+    //If we write the function as a return statement then that means that the value which is determined is the same value that will exit the function and be returned to us at the end.
+    //Whereas if the function is simply called then the value that is returned by one stack is bound to be changed by the other stacks' return function and the value in the end will not be the same
+
+    //If we write the print statement after the function then it prints in reverse whem the stack is getting unloaded but before the function call the print statement prints in the correct order
+
     void printNum(int n) {
         if (n == 0)
             return;
@@ -204,9 +210,113 @@ public class Recursion {
             } else {
                 return numberOfDigitsInStringRecursion(str, counter, i + 1);
             }
-        }
-        else{
+        } else {
             return counter;
         }
     }
+
+    public static int factorialUsingRecursion(int num) {
+        if (num == 0 || num == 1) {
+            return 1;
+        }
+        return num * factorialUsingRecursion(num - 1);
+    }
+
+    public static String reversingAString(String str, String reversed) {
+        if (str == "") {
+            return reversed;
+        }
+        return reversingAString(str.substring(0, str.length() - 1), reversed + str.charAt(str.length() - 1));
+
+    }
+
+    public static int lengthOfAString(String str, int length) {
+        if (str == "") {
+            return length;
+        }
+        return lengthOfAString(str.substring(0, str.length() - 1), length + 1);
+    }
+
+    public static int sumOfDigitsOfNumber(int num, int sum) {
+        if (num == 0) {
+            return sum;
+        }
+        return sumOfDigitsOfNumber(num / 10, sum + num % 10);
+    }
+
+    public static boolean isPalindrome(String str, String revString, String originalStr, int index) {
+        if (index == originalStr.length()) {
+            return originalStr.equals(revString);
+        }
+        return isPalindrome(str.substring(0, str.length() - 1), revString + str.charAt(str.length() - 1), originalStr, index + 1);
+    }
+
+    public static int minOfArray(int[] arr, int min, int index) {
+        if (index == arr.length - 1) {
+            return min;
+        }
+        if (min > arr[index]) {
+            return minOfArray(arr, arr[index], index + 1);
+        } else {
+            return minOfArray(arr, min, index + 1);
+        }
+    }
+
+    public static void reverseFibonacciSeries(int num, int a, int b) {
+        if (num > 0) {
+            reverseFibonacciSeries(num - 1, b, a + b);
+            System.out.println(a);
+        }
+    }
+
+    public static void removeAdjacentDuplicates(StringBuilder str, int n) {
+        int a = 0;
+        for (int b = 0; b < n; b++) {
+            if (b < n - 1 && str.charAt(b) == str.charAt(b + 1)) {
+                while (str.charAt(b) == str.charAt(b + 1)) {
+                    b++;
+                }
+            } else {
+                str.setCharAt(a, str.charAt(b));
+                a++;
+            }
+        }
+        str.setLength(a);
+        if (a != n) {
+            removeAdjacentDuplicates(str, a);
+            System.out.println(str.toString());
+        }
+    }
+
+    public static int coinChange(int[] coins, int n, int sum){
+        if(sum == 0){
+            return 1;
+        }
+        if(sum < 0 || n == 0){
+            return 0;
+        }
+
+        return coinChange(coins, n, sum-coins[n-1]) + coinChange(coins, n-1, sum);
+    }
+
+    public static void deletingALinkedList(SLL list, SLL_Node current){
+        if(current == null){
+            return;
+        }
+
+        if(current.next == null){
+            list.removeNodeFromStart();
+        }
+        else {
+            list.deleteNodePassed(current);
+            deletingALinkedList(list, current.next);
+        }
+    }
 }
+
+
+
+
+
+
+

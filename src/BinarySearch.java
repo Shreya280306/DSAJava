@@ -1,5 +1,6 @@
     public class BinarySearch {
     //Array passed in this function is sorted
+   //Time complexity is O(log n)
 
     /**
      * Problem: Find the index of the element in an array using binary search
@@ -118,7 +119,7 @@
 
     /**
      * Problem: Are there any two numbers in the array whose sum is equal to the number passed
-     * Approach: Keep reducing the array in half with the condition that compares sum found and number given as input
+     * Approach: Keep reducing the array in half with the condition that compares sum found and number given as input. Same as the two pointer approach
      * @param arr
      * @param num
      * @return

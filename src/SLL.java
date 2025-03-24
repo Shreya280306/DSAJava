@@ -44,10 +44,14 @@ public class SLL {
     }
 
     public void addNodeInEnd(SLL_Node node) {
-        if (this.tail.next != null) {
-            this.tail.next = node;
-            this.tail = node;
-        }
+            if(this.head == null){
+                this.head = node;
+                this.tail = node;
+            }
+            else {
+                tail.next = node;
+                tail = node;
+            }
     }
 
     public void removeNodeFromStart() {
@@ -61,16 +65,14 @@ public class SLL {
         SLL_Node temp = head;
         head = head.next;
         temp = null;
-        printList();
     }
 
     public void removeNodeFromLast() {
         SLL_Node current = head;
-        while (current.next.next != null) {
-            current = current.next;
+            while (current.next.next != null) {
+                current = current.next;
         }
         current.next = null;
-        printList();
     }
 
     public void addNodeInMiddle(SLL_Node node, int num) {
@@ -161,7 +163,7 @@ public class SLL {
         return list;
     }
 
-    public int listToNumber(SLL list) {
+    public int listToNumber() {
         int sum = 0;
         SLL_Node current = head;
         int num = current.data;
@@ -192,12 +194,18 @@ public class SLL {
             }
             if (current == node) {
                 prev.next = current.next;
-                //printList();
             } else {
                 System.out.println("Node doesn't exist");
             }
         }
     }
+
+    /**
+     * Problem: We need to delete a given node but without using head pointer.
+     * Approach: This also means we can't traverse through the list with the current pointer since there is no initial pointer itself. The only pointer we have is the node we want to delete.
+     *           Thus we take the data of the next node of from A and copy it into A. Then point next of A to the next of the next node of it so it appears as if that node has been deleted.
+     * @param node
+     */
 
     public void deleteNodeWithoutHead(SLL_Node node) {
         while (node.next != null) {
@@ -209,6 +217,11 @@ public class SLL {
     }
 
     // Looped linked list questions
+
+    /**
+     * Problem: Checking if the list is looped or not which means that the last node points to another node in the list and thus continues forward traversing the list again and creating a loop
+     * Approach: We use two pointers, one that travels one step at a time and the other travelling two steps at a time. If the list is looped there has to be a scenario where these two pointers meet but if its not then there is no possibility of these pointers ever meeting
+     */
     public void isListLoopedPointers() {
         SLL_Node fast = this.head;
         SLL_Node slow = this.head;
@@ -244,6 +257,9 @@ public class SLL {
         System.out.println("The list is not looped");
     }
 
+    /**
+     * Problem: Break the list at the node at which its looped
+     */
     public void breakLoop() {
         HashSet<Integer> hash = new HashSet<Integer>();
         SLL_Node current = this.head;
@@ -297,12 +313,14 @@ public class SLL {
         temp.next = current;
         head = temp;
     }
-
+/*
+Approach: Make two new lists, one which contains elements till first half and the other which contains elements till second half. If the two lists upon iterating contain the same data then its a palindrome
+          We can't just equate two lists since then it checks its address and not the data inside thus we need two seperate pointers to iterate each list
+ */
     public void isListPalindrome() {
         int middle = returnMiddleNode();
         SLL sepList = new SLL();
         SLL_Node current = this.head;
-        int length = lengthOfList();
 
         while (current.data != middle) {
             current = current.next;
@@ -328,7 +346,7 @@ public class SLL {
 
 
     /**
-     * Problem: Add numbers which are given as link ists and store the result in a new list
+     * Problem: Add numbers which are given as link lists and store the result in a new list
      * Approach: Reverse the input lists and then do the addition.
      * Special consideration for carry
      *
