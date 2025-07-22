@@ -73,6 +73,7 @@ public class SLL {
                 current = current.next;
         }
         current.next = null;
+            this.tail = current;
     }
 
     public void addNodeInMiddle(SLL_Node node, int num) {
@@ -115,10 +116,6 @@ public class SLL {
         }
     }
     // If we print after calling the function then it prints in reverse while emptying the stack but if print statement in written before calling the function it would first print and then execute again
-
-    public void printingListInReverse() {
-        printingInReverseRecursion(head);
-    }
 
     // Here we use the slow pointer-fast pointer approach of link lists
     public int returnMiddleNode() {
@@ -208,12 +205,15 @@ public class SLL {
      */
 
     public void deleteNodeWithoutHead(SLL_Node node) {
-        while (node.next != null) {
+        if (node.next != null) {
             node.data = node.next.data;
-            node = node.next;
+            if (node.next.next != null) {
+                node = node.next.next;
+            }else{
+                removeNodeFromLast();
+            }
         }
-        removeNodeFromLast();
-        //printList();
+        printList();
     }
 
     // Looped linked list questions
@@ -422,6 +422,7 @@ Approach: Make two new lists, one which contains elements till first half and th
         list3.reverseList();
         list3.printList();
     }
+
 
     public static void mergeSortedListByTweaking(SLL list1, SLL list2) {
         SLL_Node current1 = list1.head;
@@ -744,6 +745,27 @@ Approach: Make two new lists, one which contains elements till first half and th
 
         printList();
     }
+
+    public void addNodeUsingRandom(SLL_Node node, SLL_Node current){
+        if(current != null){
+            current.random = node;
+        }
+    }
+
+    public SLL_Node nodeExistsInList(SLL_Node nodeToFind){
+        SLL_Node current = this.head;
+        while(current != null){
+            if(current.data == nodeToFind.data){
+                return current;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
+
+
+
 }
 
 
