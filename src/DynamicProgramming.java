@@ -436,4 +436,22 @@ public class DynamicProgramming {
          }
          return dpArray[index][weight];
     }
+
+    public static int minimumCoinsForTarget(int[] arr, int index, int target, int[][] dpArray) {
+        if(target == 0){
+            return 0;
+        }
+        int pick = Integer.MAX_VALUE;
+        int notPick = Integer.MAX_VALUE;
+        if(dpArray[index][target] == -1) {
+            if (index != 0) {
+                notPick = minimumCoinsForTarget(arr, index-1, target, dpArray);
+            }
+            if (arr[index] <= target) {
+                pick = 1 + minimumCoinsForTarget(arr, index, target - arr[index], dpArray);
+            }
+            dpArray[index][target] = Math.min(pick, notPick);
+        }
+        return dpArray[index][target];
+    }
 }

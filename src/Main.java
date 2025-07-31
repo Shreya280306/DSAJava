@@ -27,39 +27,16 @@ public class Main {
 
     public static void main(String[] args) {
 //        testBT();
-//
-//        int n=3;
-//        int[] weights = {3,2,5};
-//        int[] values = {30,40,60};
-//        int[][]dpArray = {
-//                {-1,-1,-1,-1,-1,-1,-1,-1,-1},
-//                {-1,-1,-1,-1,-1,-1,-1,-1,-1},
-//                {-1,-1,-1,-1,-1,-1,-1,-1,-1},
-//        };
-//        System.out.println(DynamicProgramming.knapsackProblem(n-1, 8,weights, values, dpArray));
-        int[] arr = {2,3,5,7,8};
-        int n = arr.length;
-        int[][] queries = {
-                {1,4},
-                {0,1},
-                {3,3}
+        int[] arr = {1,2,3};
+        int[][] dpArray = {
+                {-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1}
         };
-        int[] ans = new int[queries.length];
-        int[] prefixArray = new int[n+1];
-        prefixArray[0] = 0;
-        for(int i=1; i<=n; i++){
-            prefixArray[i] = prefixArray[i-1] + arr[i-1];
-        }
-        for(int i=0; i<queries.length; i++){
-            int left = queries[i][0];
-            int right = queries[i][1];
-            ans[i] = prefixArray[n] - (prefixArray[right+1] - prefixArray[left]);
-        }
-        for(int i=0; i<ans.length; i++){
-            System.out.println(ans[i]);
+        System.out.println(DynamicProgramming.minimumCoinsForTarget(arr, arr.length-1, 7, dpArray));
         }
     }
-}
+
 
 
 
