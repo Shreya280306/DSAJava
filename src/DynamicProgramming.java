@@ -390,5 +390,50 @@ public class DynamicProgramming {
         return dpArray[n];
     }
 
+//DP ON SUBSEQUENCES PROBLEMS
+    //Every subsequence problem has two instances- pick it or don't pick it
+    public static boolean subsetSumEqualToTarget(int[] arr, int index, int target, int[][]dpArray){
+        if(target == 0){
+            return true;
+        }
+        if(index == 0){
+            if(target == arr[index]){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+            if(dpArray[index][target] == -1) {
+                boolean notTake = subsetSumEqualToTarget(arr, index - 1, target, dpArray);
+                boolean take = subsetSumEqualToTarget(arr, index - 1, target - arr[index], dpArray);
+                dpArray[index][target] = take || notTake ? 1:0; //If its true make it one or false make it zero
+            }
+            if(dpArray[index][target] == 0){
+                return false;
+            }
+            else return true;
+    }
 
+    public static int knapsackProblem(int index, int weight, int[]weights, int[] values, int[][]dpArray){
+         if (weight == 0){
+             return 0;
+        }
+         if(index == 0) {
+             if (weights[0] <= weight) {
+                 return values[0];
+             } else {
+                 return 0;
+             }
+         }
+         if(dpArray[index][weight] == -1) {
+             int pick = Integer.MIN_VALUE;
+             int notPick = knapsackProblem(index - 1, weight, weights, values, dpArray);
+             if (weights[index] <= weight) {
+                 pick = values[index] + knapsackProblem(index - 1, weight - weights[index], weights, values, dpArray);
+             }
+             dpArray[index][weight] = Math.max(notPick, pick);
+         }
+         return dpArray[index][weight];
+    }
 }

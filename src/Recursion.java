@@ -805,6 +805,27 @@ public class Recursion {
         return arr[n];
     }
 
+    public static int countOccurrencesInArray(int[] arr, int element, int index, int count){
+        if(index == arr.length){
+            return count;
+        }
+        if(arr[index] == element){
+            return countOccurrencesInArray(arr, element, index+1, count+1);
+        }
+        else{
+            return countOccurrencesInArray(arr, element, index+1, count);
+        }
+    }
+
+    public static String reverseString(String str, String resultStr, int index){
+        if(index < 0){
+            return resultStr;
+        }
+        return reverseString(str, resultStr + str.charAt(index), index-1);
+    }
+
+
+
 
 
 }
