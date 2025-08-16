@@ -40,7 +40,7 @@ public class TwoPointerApproach {
     }
 
     /**
-     * Problem: Find two numbers in an array whose sum is equal to the input
+     * Problem: Find two numbers in an sorted array whose sum is equal to the input
      * Approach: One pointer at the start of the array and one at the end. If the sum is greater than required then move b backwards and if the sum is less then move a forward until a crosses b or is equal
      * @param arr
      * @param sum

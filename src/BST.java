@@ -303,7 +303,7 @@ public class BST {
         return sum;
     }
 
-
+//Using inorder traversal
     public void creatingArrayOfBSTNodes(BtNode current, ArrayList<Integer> arr) {
         if (current == null) {
             return;
@@ -355,7 +355,7 @@ public class BST {
             return;
         }
         binaryTreeToBinarySearchTree(current.left, arr, count);
-            if(current.data != arr.get(count[0])) {
+                if(current.data != arr.get(count[0])) {
                 current.data = arr.get(count[0]);
                 count[0]++;
             }
@@ -372,6 +372,7 @@ public class BST {
         return -1;
     }
 
+    //Not done
     public static boolean areBSTIdentical(int[]arr1, int[]arr2, int i1, int i2, int min, int max){
         if(arr1.length != arr2.length){
             return false;
@@ -393,6 +394,7 @@ public class BST {
         return left && right;
     }
 
+    //Not done
     public void sortedArrayToBSTUsingQueue(int[] arr, QueueInLinkedList queue, int arrStart, int arrEnd){
         if(arrStart > arrEnd){
             return;
@@ -404,5 +406,44 @@ public class BST {
         queue.enQueue(QueueNode.data);
         int temp = queue.deQueue();
         BtNode treeNode = new BtNode(temp);
+    }
+    //Min heap is a type of bt wherein the smallest node is the root and all the elements on the left of the tree are smaller than the
+    //elements on the right
+    public void binaryTreeToMinHeap(ArrayList<Integer> arr, BtNode current, int[] count){
+        if(current == null){
+            return;
+        }
+        if(current.data != arr.get(count[0])){
+            current.data = arr.get(count[0]);
+        }
+        count[0]++;
+        binaryTreeToMinHeap(arr, current.left, count);
+        binaryTreeToMinHeap(arr, current.right, count);
+    }
+
+    public void addAllGreaterElementsToNode(BtNode current, int[] sum){
+        if(current == null){
+            return;
+        }
+        addAllGreaterElementsToNode(current.right, sum);
+        sum[0] += current.data;
+        current.data = sum[0];
+        addAllGreaterElementsToNode(current.left, sum);
+    }
+
+    public static boolean BSTContainingSameElements(BST tree1, BST tree2){
+        ArrayList<Integer> arr1 = new ArrayList<>();
+        ArrayList<Integer> arr2 = new ArrayList<>();
+        tree1.creatingArrayOfBSTNodes(tree1.root, arr1);
+        tree2.creatingArrayOfBSTNodes(tree2.root, arr2);
+        if(arr1.size() != arr2.size()){
+            return false;
+        }
+        for(int i=0; i<arr1.size(); i++){
+            if(!arr1.get(i).equals(arr2.get(i))){
+                return false;
+            }
+        }
+        return true;
     }
 }

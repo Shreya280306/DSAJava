@@ -11,7 +11,6 @@ public class DynamicProgramming {
 
     /**
      * Problem: Lucas numbers are the same as fibonacci but the first two numbers are 1 and 2
-     *
      * @param n
      * @param dpArray
      * @return
@@ -65,6 +64,14 @@ public class DynamicProgramming {
         return dpArray[n];
     }
 
+    /**
+     * Frog can jump k steps
+     * @param n
+     * @param k
+     * @param heights
+     * @param dpArray
+     * @return
+     */
     public static int frogJumpK(int n, int k, int[] heights, int[] dpArray) {
         if (n == 0) return 0;
 
@@ -80,6 +87,13 @@ public class DynamicProgramming {
         return dpArray[n] = minCost;  // Memoize and return
     }
 
+    /**
+     * We need to find the sum of elements but the given condition is that the elements should not be adjacent
+     * @param n
+     * @param nums
+     * @param dpArray
+     * @return
+     */
     public static int maxSumOfNonAdjacentElements(int n, int[] nums, int[] dpArray) {
         if (n == 0) {
             return nums[n];
@@ -103,7 +117,7 @@ public class DynamicProgramming {
      * cannot perform an activity he performed the previous day. Each activity has some merit points that
      * differ according to each day thus the points array is a 2D array. Calculate the maximum number of
      * points that the ninja can earn in n days.
-     * <p>
+     *
      * This is different from the previous problem since there we couldn't take consecutive days so just
      * skipped the day but here we can't skip the day, we have to perform some activity.
      */
@@ -131,7 +145,7 @@ public class DynamicProgramming {
     }
 
     /**
-     * Problem: We have been given a grid of m x n and we have to determine just how many paths we have
+     * Problem: We have been given a grid of m x n, and we have to determine just how many paths we have
      * to reach the exact opposite point from (0,0)
      */
     public static int uniquePathsInGrid(int i, int j, int[][] dpArray) {
@@ -148,6 +162,15 @@ public class DynamicProgramming {
         }
         return dpArray[i][j];
     }
+
+    /**
+     * We placed a dead cell in the matrix wherein we say that its value is -1 and it cannot be traversed
+     * @param grid
+     * @param i
+     * @param j
+     * @param dpArray
+     * @return
+     */
 
     public static int uniquePathsInGridWithADeadCell(int[][] grid, int i, int j, int[][] dpArray) {
         if (i == 0 && j == 0) {
@@ -174,7 +197,7 @@ public class DynamicProgramming {
             return grid[0][0];
         }
         if (i < 0 || j < 0) {
-            return 1000000; //So you never have to take this value
+            return Integer.MAX_VALUE; //So you never have to take this value
         }
         if (dpArray[i][j] == -1) {
             int up = grid[i][j] + minimumPathSumOfGrid(grid, i - 1, j, dpArray);
@@ -185,9 +208,9 @@ public class DynamicProgramming {
     }
 
     /**
-     * Problem: We have been given a 2d array in the shape of a triangle and we have to find the minimum
+     * Problem: We have been given a 2d array in the shape of a triangle, and we have to find the minimum
      * path sum but the twist is that we don't have a definite end point like we did before
-     * ending up anywhere in the last row is counted as a path. Thus in this case we start from (0,0)
+     * ending up anywhere in the last row is counted as a path. Thus, in this case we start from (0,0)
      * and then travel till we reach the last row.
      * Operations possible: Going down or diagonal
      *
@@ -213,15 +236,6 @@ public class DynamicProgramming {
         return dpArray[i][j];
     }
 
-    /**
-     * @param grid
-     * @param n
-     * @param m
-     * @param i
-     * @param j
-     * @param dpArray
-     * @return
-     */
     public static int maxPathSumWithoutFixedStartOrEndPoints(int[][] grid, int n, int m, int i, int j, int[][] dpArray) {
         if (j < 0 || j >= m) {
             return -1;
@@ -324,7 +338,7 @@ public class DynamicProgramming {
         return dpArray[i][j];
     }
 
-    public static int[] perfectSquareArrayTilln(int n) {
+    private static int[] perfectSquareArrayTilln(int n) {
         int[] arr = new int[n / 2];
         for (int i = 1; i * i <= n; i++) {
             arr[i - 1] = i * i;
@@ -332,12 +346,6 @@ public class DynamicProgramming {
         return arr;
     }
 
-    /**
-     *
-     * @param n
-     * @param dpArray
-     * @return
-     */
     public static int minPerfectSquareSum(int n, int[] dpArray) {
         if (n == 0) {
             return 0;
@@ -352,7 +360,14 @@ public class DynamicProgramming {
         return dpArray[n];
     }
 
-    public static int findingBinomialCoeff(int n, int k, int[][] dpArray){
+    /**
+     * Formula: nCr = (n-1)C(r-1) + (n-1)Cr
+     * @param n
+     * @param k
+     * @param dpArray
+     * @return
+     */
+    public static int findingBinomialCoefficient(int n, int k, int[][] dpArray){
         if(k == 0){
             return 1;
         }
@@ -363,7 +378,7 @@ public class DynamicProgramming {
             return 1;
         }
         if(dpArray[n][k] == -1) {
-            dpArray[n][k] = findingBinomialCoeff(n - 1, k - 1, dpArray) + findingBinomialCoeff(n - 1, k, dpArray);
+            dpArray[n][k] = findingBinomialCoefficient(n - 1, k - 1, dpArray) + findingBinomialCoefficient(n - 1, k, dpArray);
         }
         return dpArray[n][k];
     }
@@ -378,6 +393,13 @@ public class DynamicProgramming {
         return dpArray[n][k];
     }
 
+    /**
+     * The house robber cannot rob the adjacent house
+     * @param money
+     * @param n
+     * @param dpArray
+     * @return
+     */
     public static int houseRobber(int[]money, int n, int[]dpArray){
         if(n == 0 || n == 1){
             return money[n];
@@ -392,6 +414,7 @@ public class DynamicProgramming {
 
 //DP ON SUBSEQUENCES PROBLEMS
     //Every subsequence problem has two instances- pick it or don't pick it
+
     public static boolean subsetSumEqualToTarget(int[] arr, int index, int target, int[][]dpArray){
         if(target == 0){
             return true;
@@ -415,6 +438,16 @@ public class DynamicProgramming {
             else return true;
     }
 
+    /**
+     * You have a bad of given weight and number of items with given weights and values in an array. You need to maximize the value of
+     * the items picked up
+     * @param index
+     * @param weight
+     * @param weights
+     * @param values
+     * @param dpArray
+     * @return
+     */
     public static int knapsackProblem(int index, int weight, int[]weights, int[] values, int[][]dpArray){
          if (weight == 0){
              return 0;
@@ -452,6 +485,321 @@ public class DynamicProgramming {
             }
             dpArray[index][target] = Math.min(pick, notPick);
         }
+        if(dpArray[index][target] != Integer.MAX_VALUE) {
+            return dpArray[index][target];
+        }else{
+            return -1;
+        }
+    }
+
+    public static int countSubsetsWithSumK(int[] arr, int index, int target, int[][]dpArray){
+        if(target == 0){
+            return 1;
+        }
+        if(target<0){
+            return 0;
+        }
+        if(index == 0){
+            if(arr[0] == target){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        if(dpArray[index][target] == -1) {
+            int pick = countSubsetsWithSumK(arr, index - 1, target - arr[index], dpArray);
+            int notPick = countSubsetsWithSumK(arr, index - 1, target, dpArray);
+            dpArray[index][target] = pick + notPick;
+        }
         return dpArray[index][target];
     }
+
+    private static int calculatingSumOfArray(int[]arr){
+        int sum = 0;
+        for(int i=0; i<arr.length; i++){
+            sum += arr[i];
+        }
+        return sum;
+    }
+
+    /**
+     * Partition the array in such a way that you create two subsets whose sum when subtracted from the other gives a difference of D
+     * @param arr
+     * @param D
+     * @param sum
+     * @param index
+     * @param difference
+     * @param internalSum
+     * @return
+     */
+    public static int countPartitionsWithDiff(int[] arr, int D, int sum, int index, int difference, int internalSum){
+        if(difference == D){
+            return 1;
+        }
+        if(index == -1){
+            return 0;
+        }
+        internalSum = internalSum-arr[index];
+        difference = Math.abs((2*internalSum)-sum);
+        int pick = countPartitionsWithDiff(arr, D, sum, index-1, difference, internalSum);
+        int notPick =  countPartitionsWithDiff(arr, D, sum, index-1, difference, internalSum);
+        return pick+notPick;
+    }
+    //If we get a question as in an array you can assign either a positive or negative sign to each element of the array then count the
+    //number of ways you can achieve a given target. Then all we have to do is use the same code since one array is taken as positive
+    //and the other as negative and ultimately subtracting both the elements we get our answer
+
+    /**
+     * Partition two arrays in such a way that the sum of both the subarrays is equal
+     * @param arr
+     * @param sum
+     * @param index
+     * @param target
+     * @return
+     */
+    public static boolean partitionEqualSubsetSum(int[] arr, int sum, int index, int target){
+        if(arr.length % 2 != 0){
+            return false;
+        }
+        if(target == 0){
+            return true;
+        }
+        if(index == 0){
+            if(arr[0] == target){
+                return true;
+            }
+            else
+                return false;
+        }
+        boolean pick = partitionEqualSubsetSum(arr, sum, index-1, target-arr[index]);
+        boolean notPick = partitionEqualSubsetSum(arr, sum, index-1, target);
+
+        return pick || notPick;
+    }
+
+    /**
+     * Partition the array into two subarrays such that the difference between the sum of both the arrays is minimum
+     * @param arr
+     * @param index
+     * @param sum
+     * @param taken
+     * @return
+     */
+    public static int partitionToGetMinimumDiff(int[] arr, int index, int sum, int taken){
+        if(index == -1){
+            return Math.abs(sum - (2*taken));
+        }
+        int pick = partitionToGetMinimumDiff(arr, index-1, sum, taken+arr[index]);
+        int notpick = partitionToGetMinimumDiff(arr, index-1, sum, taken);
+        return Math.min(pick, notpick);
+    }
+
+    /**
+     * Count the number of possible subsets whose sum is k
+     * @param arr
+     * @param target
+     * @param index
+     * @param sum
+     * @return
+     */
+    public static int numberOfSubsetsOfk(int[] arr, int target, int index, int sum){
+        if(index == -1 && sum == target){
+            return 1;
+        }
+        if(index == -1 && sum != target){
+            return 0;
+        }
+        int pick = numberOfSubsetsOfk(arr, target, index-1, sum + arr[index]);
+        int notpick = numberOfSubsetsOfk(arr, target, index-1, sum);
+        return pick + notpick;
+    }
+
+    /**
+     * Problem: Same problem as before but the knapsack now has unlimited elements
+     * Approach: Whenever we have unlimited elements we always stay at the same index while picking the element but reduce the index if we
+     * don't pick it
+     * @param weights
+     * @param values
+     * @param index
+     * @param weight
+     * @param dpArray
+     * @return
+     */
+    public static int unboundedKnapsackProblem(int[] weights, int[] values, int index, int weight, int[][] dpArray){
+        if(index == 0){
+            return (weight/weights[0]) * values[0];
+        }
+        if(dpArray[index][weight] == -1) {
+            int pick = Integer.MIN_VALUE;
+            if (weights[index] <= weight) {
+                pick = values[index] + unboundedKnapsackProblem(weights, values, index, weight - weights[index], dpArray);
+            }
+            int notpick = unboundedKnapsackProblem(weights, values, index - 1, weight, dpArray);
+            dpArray[index][weight]= Math.max(pick, notpick);
+        }
+        return dpArray[index][weight];
+    }
+
+    /**
+     * Problem: We have been given a rod length that needs to be broken down into pieces and each piece of different lengths has
+     * different prices so we need to cut our rod in such a way that the price is maximized and we can have multiple pieces of same length
+     * Approach: Its exactly the same as the previous problem the only difference being if we have been given a length of 5 then the rod
+     * can we broken down into 1,2,3,4,5 length pieces so we make a lengths array first and solve the problem similar to the previous ones
+     * @param rodLength
+     * @param prices
+     * @return
+     */
+    public static int cuttingRodForPrice(int rodLength, int[] prices){
+        int[] lengths = new int[rodLength];
+        for(int i=0; i < lengths.length; i++){
+            lengths[i] = i+1;
+        }
+        return cuttingRodForPriceHelper(lengths, prices, lengths.length-1, lengths[lengths.length-1]);
+    }
+
+    public static int cuttingRodForPriceHelper(int[] lengths, int[] prices, int index, int length){
+        if(index == 0){
+            return prices[index];
+        }
+        int pick = Integer.MIN_VALUE;
+        if(lengths[index] <= length) {
+            pick = prices[index] + cuttingRodForPriceHelper(lengths, prices, index, length - lengths[index]);
+        }
+        int notPick = cuttingRodForPriceHelper(lengths, prices, index-1, length);
+        return Math.max(pick, notPick);
+    }
+
+//GFG problems
+    /**
+     * We have been given a string of numbers and need to decode it. Eg:"123" can be taken as {1,2,3} or {12,3} or {1,23} but the numbers
+     * taken should be less than 26 since we need it referring to numbers
+     * @param str
+     * @param index
+     * @return
+     */
+    public static int numberOfPossibleDecodings(String str, int index){
+        if(index >= str.length()){
+            return 1;
+        }
+        int firstDigit = 0;
+        if(str.charAt(index) != 0){
+            firstDigit = numberOfPossibleDecodings(str, index+1);
+            if(index < str.length()-1) {
+                int twoDigits = Integer.parseInt(str.substring(index, index + 2));
+                if (twoDigits >= 10 && twoDigits <= 26) {
+                    firstDigit += numberOfPossibleDecodings(str, index + 2);
+                }
+            }
+        }
+        return firstDigit;
+    }
+    //Done before
+    public static boolean subsetSumProblem(int[] arr, int sum, int index){
+        if(sum == 0){
+            return true;
+        }
+        if(index == 0){
+            if(arr[0] == sum){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        boolean pick = subsetSumProblem(arr, sum-arr[index], index-1);
+        boolean notPick = subsetSumProblem(arr, sum, index-1);
+        return pick || notPick;
+    }
+//Done before
+    public static int coinChange(int[] coins, int sum, int index){
+        if(index == 0){
+            if(sum % coins[0] == 0){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        int pick = 0;
+        if(coins[index] <= sum) {
+            pick = coinChange(coins, sum - coins[index], index);
+        }
+        int notPick = coinChange(coins, sum, index-1);
+        return pick + notPick;
+    }
+
+    public static int paintingFenceAlgo(int posts, int colours){
+        int[] arr = new int[posts];
+        for(int i=0; i<arr.length; i++){
+            arr[i] = i+1;
+        }
+        return paintingFenceAlgoHelper(arr, colours, arr.length, 0, 1);
+    }
+
+//Leaving for now
+    public static int paintingFenceAlgoHelper(int[] arr, int colours, int index, int last, int count){
+        int temp = 0;
+        if(index == 0){
+            return 1;
+        }
+        if(index == arr.length){
+            for(int i=0; i<colours; i++){
+                temp += paintingFenceAlgoHelper(arr, colours, index-1, i, count);
+            }
+        }
+        for(int i=0; i<colours; i++){
+            if(i == last && count != 2){
+                temp += paintingFenceAlgoHelper(arr, colours, index - 1, i, count+1);
+            }
+            else if(i != last) {
+                temp += paintingFenceAlgoHelper(arr, colours, index - 1, i, count);
+            }
+        }
+        return temp;
+    }
+
+    public static int minJumpsToReachEnd(int[] arr, int index){
+//        if(arr[index] == 0){
+//            return 0;
+//        }
+        if(index >= arr.length-1){
+            return 0;
+        }
+        int ans = Integer.MAX_VALUE;
+        for(int i = 1; i <= arr[index]; i++){
+            if(i < arr.length && arr[i] == 0){
+                return 0;
+            }
+            int jumps = minJumpsToReachEnd(arr, index+i);
+            if(jumps != Integer.MAX_VALUE){
+                ans = Math.min(ans, jumps+1);
+            }
+        }
+        return ans;
+    }
+    
+//Done already
+    public static int countPathsWithObstructionInGrid(int[][]grid, int i, int j, int[][]dpArray){
+        if(i == 0 && j == 0){
+            return 1;
+        }
+        if(i < 0 || j < 0){
+            return 0;
+        }
+        if(grid[i][j] == 1){
+            return 0;
+        }
+        if(dpArray[i][j] == -1) {
+            int up = countPathsWithObstructionInGrid(grid, i - 1, j, dpArray);
+            int left = countPathsWithObstructionInGrid(grid, i, j - 1, dpArray);
+            dpArray[i][j] = up + left;
+        }
+        return dpArray[i][j];
+    }
+
+
+
+
+
 }
