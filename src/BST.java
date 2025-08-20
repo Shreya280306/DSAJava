@@ -287,6 +287,17 @@ public class BST {
         return kthLargestElement(k, current.left, arr);
     }
 
+    /**
+     * In java the default parameter type is passing by value but through the recursion stack we want the variable count value to actually get
+     * updated only when we want for every recursion after updating and not just for that particular recursion call. For that purpose
+     * we use count as an array here since arrays are passed by reference but variables are passed by values. So everytime we need to access
+     * the count variable we access the 0th element of the count array 
+     * @param k
+     * @param current
+     * @param count
+     * @param sum
+     * @return
+     */
     public int sumOfkLargestElements(int k, BtNode current, int[] count, int sum) {
         if (current == null) {
             return sum;
@@ -304,7 +315,8 @@ public class BST {
     }
 
 //Using inorder traversal
-    public void creatingArrayOfBSTNodes(BtNode current, ArrayList<Integer> arr) {
+    public void creatingArrayOfBSTNodes(BtNode current, ArrayList<
+Integer> arr) {
         if (current == null) {
             return;
         }
@@ -313,7 +325,8 @@ public class BST {
         creatingArrayOfBSTNodes(current.right, arr);
     }
 
-    public BtNode balancingBST(ArrayList<Integer> arr, int start, int end) {
+    public BtNode balancingBST(ArrayList<
+Integer> arr, int start, int end) {
         int middle = (start + end) / 2;
         if (start > end) {
             return null;
@@ -350,7 +363,8 @@ public class BST {
         }
     }
 
-    public void binaryTreeToBinarySearchTree(BtNode current, ArrayList<Integer> arr, int[] count){
+    public void binaryTreeToBinarySearchTree(BtNode current, ArrayList<
+Integer> arr, int[] count){
         if(current == null){
             return;
         }
@@ -409,7 +423,8 @@ public class BST {
     }
     //Min heap is a type of bt wherein the smallest node is the root and all the elements on the left of the tree are smaller than the
     //elements on the right
-    public void binaryTreeToMinHeap(ArrayList<Integer> arr, BtNode current, int[] count){
+    public void binaryTreeToMinHeap(ArrayList<
+Integer> arr, BtNode current, int[] count){
         if(current == null){
             return;
         }
@@ -446,4 +461,142 @@ public class BST {
         }
         return true;
     }
+
+//    public static void buildingPreorderFromArr(int[] arr, ArrayList<
+//Integer> preorder, int min, int max){
+//        int smallerCounter = 0;
+//        if(min != Integer.MIN_VALUE){
+//            smallerCounter = min;
+//        }
+//        if(!preorder.isEmpty()) {
+//            max = preorder.getLast();
+//        }
+//        if(min == arr[0]){
+//            smallerCounter = 0;
+//        }
+//        for(; smallerCounter<arr.length; smallerCounter++){
+//            if(arr[smallerCounter] > min && arr[smallerCounter] < max){
+//                break;
+//            }
+//        }
+//        if(smallerCounter == arr.length){
+//            return;
+//        }
+//        preorder.add(arr[smallerCounter]);
+//        buildingPreorderFromArr(arr, preorder, min, max);
+//
+//        min = arr[smallerCounter];
+//        int largerCounter = min;
+//        if(min == arr[0] && max == Integer.MAX_VALUE){
+//             largerCounter = 0;
+//        }
+//        for(; largerCounter<arr.length; largerCounter++){
+//            if(arr[largerCounter] > min && arr[largerCounter] < max){
+//                break;
+//            }
+//        }
+//        //min = max;
+//        if(largerCounter == arr.length){
+//            return;
+//        }
+//        preorder.add(arr[largerCounter]);
+//        buildingPreorderFromArr(arr, preorder, min, max);
+//    }
+
+
+        public static ArrayList<Integer> getPreorder(int[] arr) {
+            ArrayList<Integer> out = new ArrayList<>();
+            preorder(arr, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, out);
+            return out;
+        }
+
+        // Find the first index >= start whose value is in (min, max)
+        private static int nextIdxInRange(int[] arr, int start, int min, int max) {
+            for (int i = start; i < arr.length; i++) {
+                if (arr[i] > min && arr[i] < max){
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private static void preorder(int[] arr, int start, int min, int max, ArrayList<Integer> out) {
+            int idx = nextIdxInRange(arr, start, min, max);
+            if (idx == -1) {
+                return;                   // no node in this range
+            }
+
+            int root = arr[idx];
+            out.add(root);                            // visit root (preorder)
+
+            // Left subtree: values in (min, root)
+            preorder(arr, idx + 1, min, root, out);
+
+            // Right subtree: values in (root, max)
+            preorder(arr, idx + 1, root, max, out);
+        }
+        public static BtNode constructingBSTFromPreorder(int[] arr, int[] index, int min, int max){
+            if(index[0] >= arr.length){
+                return null;
+            }
+            int key = arr[index[0]];
+            if(key <= min || key >= max){
+                return null;
+            }
+            BtNode root = new BtNode(key);
+            index[0]++;
+
+            root.left = constructingBSTFromPreorder(arr, index, min, key);
+            root.right = constructingBSTFromPreorder(arr, index, key, max);
+            return root;
+        }
+
+    /**
+     * Problem: We have to check if the given two arrays create the same bst or not
+     * Approach: We know that if their preorder is same then the bst's created will also be same thus we first try to find the preorder
+     *           of both the bst's only using their arrays and just compare if the arrays we got are same or not
+     * @param arr1
+     * @param arr2
+     * @return
+     */
+        public static boolean areSameBSTs(int[] arr1, int[] arr2){
+            int[] preOrder1 = new int[10];
+            int[] preOrder2 = new int[10];
+            getPreorder(preOrder1);
+            getPreorder(preOrder2);
+            for(int i=0; i<preOrder1.length; i++){
+                if(preOrder1[i] != preOrder2[i]){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static boolean areSameBSTsWithoutUsingArrays(int[] arr1, int[] arr2, int n, int l, int r, int min, int max){
+            int leftIndex = l;
+            int rightIndex = r;
+            for(; leftIndex<n; leftIndex++){
+                if(arr1[leftIndex] > min && arr1[leftIndex] < max){
+                    break;
+                }
+            }
+
+            for(; rightIndex<n; rightIndex++){
+                if(arr2[rightIndex] > min && arr2[rightIndex] < max){
+                    break;
+                }
+            }
+
+            if(leftIndex == n && rightIndex == n){
+                return true;
+            }
+
+            if((leftIndex == n || rightIndex == n) || arr1[leftIndex] != arr2[rightIndex]){
+                return false;
+            }
+            return areSameBSTsWithoutUsingArrays(arr1, arr2, n, leftIndex+1, rightIndex+1, arr1[leftIndex], max) &&
+                    areSameBSTsWithoutUsingArrays(arr1, arr2, n, leftIndex+1, rightIndex+1, min, arr1[leftIndex]);
+
+        }
+
 }

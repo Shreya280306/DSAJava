@@ -27,10 +27,14 @@ public class Main {
         bst.insertingLeafNode(new BtNode(60), bstRoot);
         bst.insertingLeafNode(new BtNode(80), bstRoot);
 
-        //ArrayList<Integer> arr = new ArrayList<>();
-        int[] sum = {0};
-        //bst.creatingArrayOfBSTNodes(bstRoot, arr);
-        bst.addAllGreaterElementsToNode(bstRoot, sum);
+//        int[] arr = {8, 10, 14, 3, 6, 4, 1, 7, 13};
+//        ArrayList<Integer> preorder = new ArrayList<>();
+//        //preorder.add(arr[0]);
+//        //BST.buildingPreorderFromArr(arr, preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
+//        preorder = BST.getPreorder(arr);
+        int[] arr1 = {8, 3, 6, 1, 4, 7, 10, 14, 13};
+        int[] arr2 = {8, 10, 14, 3, 6, 4, 1, 7, 13};
+        System.out.println(BST.areSameBSTsWithoutUsingArrays(arr1, arr2, arr1.length, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE));
     }
 
         public static void main (String[]args){
