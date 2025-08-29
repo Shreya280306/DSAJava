@@ -4,37 +4,30 @@ import java.util.HashMap;
 
 public class Main {
     static void testBT() {
-        BtNode bstRoot = new BtNode(50);
+        BtNode bstRoot = new BtNode(1);
         BST bst = new BST(bstRoot);
-//        BtNode node1 = new BtNode(2);
-//        BtNode node2 = new BtNode(8);
-//        BtNode node3 = new BtNode(4);
-//        BtNode node4 = new BtNode(7);
-//        bstRoot.left = node1;
-//        node1.left = node2;
-//        node1.right = node3;
-//        bstRoot.right = node4;
-//        ArrayList<Integer> arr = new ArrayList<>();
-//        int[] count = {0};
-//        bst.creatingArrayOfBSTNodes(bstRoot, arr);
-//        bst.binaryTreeToBinarySearchTree(bstRoot, arr, count);
+        BtNode node1 = new BtNode(2);
+        BtNode node2 = new BtNode(3);
+        BtNode node3 = new BtNode(4);
+        BtNode node4 = new BtNode(5);
+        BtNode node5 = new BtNode(6);
+        bstRoot.left = node1;
+        bstRoot.right = node2;
+        node1.left = node3;
+        node2.left = node4;
+        node2.right = node5;
 
+//        bst.insertingLeafNode(new BtNode(2), bstRoot);
+//        bst.insertingLeafNode(new BtNode(8), bstRoot);
+//        bst.insertingLeafNode(new BtNode(3), bstRoot);
+//        bst.insertingLeafNode(new BtNode(5), bstRoot);
+//        bst.insertingLeafNode(new BtNode(1), bstRoot);
+//        bst.insertingLeafNode(new BtNode(5), bstRoot);
+//        bst.insertingLeafNode(new BtNode(8), bstRoot);
+//        bst.insertingLeafNode(new BtNode(10), bstRoot);
 
-        bst.insertingLeafNode(new BtNode(30), bstRoot);
-        bst.insertingLeafNode(new BtNode(20), bstRoot);
-        bst.insertingLeafNode(new BtNode(40), bstRoot);
-        bst.insertingLeafNode(new BtNode(70), bstRoot);
-        bst.insertingLeafNode(new BtNode(60), bstRoot);
-        bst.insertingLeafNode(new BtNode(80), bstRoot);
-
-//        int[] arr = {8, 10, 14, 3, 6, 4, 1, 7, 13};
-//        ArrayList<Integer> preorder = new ArrayList<>();
-//        //preorder.add(arr[0]);
-//        //BST.buildingPreorderFromArr(arr, preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
-//        preorder = BST.getPreorder(arr);
-        int[] arr1 = {8, 3, 6, 1, 4, 7, 10, 14, 13};
-        int[] arr2 = {8, 10, 14, 3, 6, 4, 1, 7, 13};
-        System.out.println(BST.areSameBSTsWithoutUsingArrays(arr1, arr2, arr1.length, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE));
+        int[] arr = {11, 6, 13, 5, 12, 10};
+        System.out.println(BST.isArrayLevelOrder(arr));
     }
 
         public static void main (String[]args){

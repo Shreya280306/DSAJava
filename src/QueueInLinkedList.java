@@ -48,4 +48,27 @@ public class QueueInLinkedList {
     public void reverseQueue(){
         list.reverseListWithRecursion();
     }
+
+    public void enqueueBtNode(BtNode bstroot){
+        SLL_Node node = new SLL_Node(bstroot);
+        list.addNodeInEnd(node);
+    }
+
+    public BtNode dequeueBtNode(){
+        if(list.head == null){
+            return null;
+        }
+        BtNode element = list.head.bstnode;
+        list.removeNodeFromStart();
+        return element;
+    }
+
+    public void enqueueBtNodeWithBoundaries(BtNode bstroot, int min, int max){
+        SLL_Node node = new SLL_Node(bstroot);
+        list.addNodeInEnd(node);
+        node.min = min;
+        node.max = max;
+    }
+
+
 }
