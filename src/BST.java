@@ -318,8 +318,7 @@ public class BST {
     }
 
 //Using inorder traversal
-    public void creatingArrayOfBSTNodes(BtNode current, ArrayList<
-Integer> arr) {
+    public void creatingArrayOfBSTNodes(BtNode current, ArrayList<Integer> arr) {
         if (current == null) {
             return;
         }
@@ -328,8 +327,7 @@ Integer> arr) {
         creatingArrayOfBSTNodes(current.right, arr);
     }
 
-    public BtNode balancingBST(ArrayList<
-Integer> arr, int start, int end) {
+    public static BtNode balancingBST(ArrayList<Integer> arr, int start, int end) {
         int middle = (start + end) / 2;
         if (start > end) {
             return null;
@@ -366,8 +364,7 @@ Integer> arr, int start, int end) {
         }
     }
 
-    public void binaryTreeToBinarySearchTree(BtNode current, ArrayList<
-Integer> arr, int[] count){
+    public void binaryTreeToBinarySearchTree(BtNode current, ArrayList<Integer> arr, int[] count){
         if(current == null){
             return;
         }
@@ -694,7 +691,13 @@ Integer> arr, BtNode current, int[] count){
     }
 
 
-
+    /**
+     * Problem: Given a BST we need to find its level order traversal
+     * Approach: We put the BtNodes in a queue here and then dequeue one at a time which solves our problem of the location or order the
+     *           nodes are supposed to come in
+     * @param result
+     * @param root
+     */
     public void BSTLevelOrderTraversal(ArrayList<Integer> result, BtNode root) {
         QueueInLinkedList queue = new QueueInLinkedList();
         queue.enqueueBtNode(root);
@@ -714,6 +717,12 @@ Integer> arr, BtNode current, int[] count){
         }
     }
 
+    /**
+     * Approach: Using DP in binary tree
+     * @param root
+     * @param dp
+     * @return
+     */
     public int maxSumOfNonAdjacentNodes(BtNode root, HashMap<BtNode, Integer> dp){
         if(root == null){
             return 0;
@@ -737,6 +746,13 @@ Integer> arr, BtNode current, int[] count){
         return newNode;
     }
 
+    /**
+     * Problem: We have been given an array which contains the level order of BST nodes we need to find the BST fro that
+     * Approach: We make a new queue which takes in a binary tree node along with min and max values which get updated comparing with the
+     *           current array element. This question is the combination of the min max approach along with the putting into a queue approach
+      * @param arr
+     * @return
+     */
     public static BtNode getBSTFromLevelOrder(int[]arr){
         BtNode root = new BtNode(arr[0]);
         QueueForLevelOrderBST queue = new QueueForLevelOrderBST();
@@ -788,5 +804,101 @@ Integer> arr, BtNode current, int[] count){
             }
     }
 
+    public boolean inorder(BtNode root, BtNode prevNode) {
+        if(root == null){
+            return true;
+        }
+
+        if(!inorder(root.left, prevNode)){
+            return false;
+        }
+        if(prevNode != null && root.data <= prevNode.data){
+            return false;
+        }
+        return inorder(root.right, root);
+    }
+
+    /**
+     * Question: This is a binary tree. Given two nodes we need to find their lowest common ancestor- the node that is
+     *           common to them in the tree or the node where the two given nodes connect.
+     * Approach: Since this is a binary tree we can't just use the interval approach so, we store the paths in the tree in arrays until we
+     *           find the node and then compare the two paths to give their common element as LCA. For finding the paths we have to use
+     *           backtracking since if my node is at the right i don't want my path to include the left node too while traversing so
+     *           we check if the node is at the right or left and if not we remove the node that we just added to the arraylist
+     * @param node1
+     * @param node2
+     * @param root
+     * @return
+     */
+    public int lowestCommonAncestorBinaryTree(BtNode node1, BtNode node2, BtNode root){
+        ArrayList<Integer> path1 = new ArrayList<>();
+        ArrayList<Integer> path2 = new ArrayList<>();
+        notingPaths(root, path1, node1);
+        notingPaths(root, path2, node2);
+        int length;
+        if(path1.size() > path2.size()){
+            length = path2.size();
+        }
+        else{
+            length = path1.size();
+        }
+        int common = 0;
+        for(int i=0; i<length-1; i++){
+            if(path1.get(i).equals(path2.get(i))){
+                common = path1.get(i);
+            }
+        }
+        return common;
+    }
+
+    private boolean notingPaths(BtNode root, ArrayList<Integer> path, BtNode nodeGiven) {
+        if (root == null) {
+            return false;
+        }
+        path.add(root.data);
+
+        if (root == nodeGiven) {
+            return true;
+        }
+        if(notingPaths(root.left, path, nodeGiven) || notingPaths(root.right, path, nodeGiven)){
+            return true;
+        }
+        path.remove(path.size()-1);
+        return false;
+    }
+
+    /**
+     * Approach: Trying to find the pattern between the nodes and their LCA we see that the LCA always lies in the middle of both the nodes
+     *           of the BST. Moreover, the LCA is the first node while traversing that lies between them so we break as soon as those conditions
+     *           are met
+     * @param node1
+     * @param node2
+     * @param root
+     * @return
+     */
+    public BtNode LCAOfBST(BtNode node1, BtNode node2, BtNode root){
+        if(root == null){
+            return null;
+        }
+        if(root.data >= node1.data && root.data <= node2.data){
+            return root;
+        }
+        if(node1.data <= root.data){
+           return LCAOfBST(node1, node2, root.left);
+        }
+        else{
+            return LCAOfBST(node1, node2, root.right);
+        }
+    }
+
+    public int findingDistanceBetweenTwoNode(BtNode node1, BtNode node2, BtNode root){
+        ArrayList<Integer> path1 = new ArrayList<>();
+        ArrayList<Integer> path2 = new ArrayList<>();
+        notingPaths(root, path1, node1);
+        notingPaths(root, path2, node2);
+        int length1 = path1.size();
+        int length2 = path2.size();
+        return length1 + length2 - 2;
+    }
 
 }
