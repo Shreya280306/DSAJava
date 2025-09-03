@@ -901,4 +901,79 @@ Integer> arr, BtNode current, int[] count){
         return length1 + length2 - 2;
     }
 
+    public boolean largestBSTinBT(BtNode root){
+        if(root == null){
+            return true;
+        }
+        boolean left = largestBSTinBT(root.left);
+        boolean right = largestBSTinBT(root.right);
+
+        if(root.left.data < root.data && root.right.data > root.data){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
+     * Problem: Given a binary tree we need to find the size of the largest subtree which is a binary search tree. Return the size which is
+     *          the number of nodes present in the subtree.
+     * Approach: Trying to find at each node if that node is the root for a BST. The check of whether it's a bst is a different function
+     *          which is repeatedly called for every node. But the time complexity for this function is O(n2)
+     * @param root
+     * @param length
+     * @param maxlength
+     * @return
+     */
+    public int findingBSTFromBinaryTree(BtNode root, int[] length, int[] maxlength){
+        if(root == null){
+            return 0;
+        }
+        boolean result = isBinaryTreeBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE, length);
+        if(result){
+            if(length[0] > maxlength[0]){
+                maxlength[0] = length[0];
+            }
+            length[0] = 0;
+            return maxlength[0];
+        }
+        else{
+            length[0] = 0;
+            findingBSTFromBinaryTree(root.left, length, maxlength);
+            findingBSTFromBinaryTree(root.right, length, maxlength);
+        }
+        return maxlength[0];
+    }
+
+    public boolean isBinaryTreeBST(BtNode root, int min, int max, int[] length){
+        if(root == null){
+            return true;
+        }
+        length[0]++;
+        if(root.data <= min || root.data >= max){
+            return false;
+        }
+        return isBinaryTreeBST(root.left, min, root.data, length) && isBinaryTreeBST(root.right, root.data, max, length);
+    }
+
+    //taking an array arr[isBST, size, min, max]
+    public int[] isBinaryTreeBST2(BtNode root, int[] maxSize){
+        if(root == null){
+            return new int[]{1, 0, Integer.MAX_VALUE, Integer.MIN_VALUE};
+        }
+        int[] left = isBinaryTreeBST2(root.left, maxSize);
+        int[] right = isBinaryTreeBST2(root.right, maxSize);
+        if(left[0] == 1 && right[0] == 1 && root.data > left[3] && root.data < right[2]){
+            int size = left[1] + right[1] + 1;
+            maxSize[0] = Math.max(size, maxSize[0]);
+            int min = Math.min(root.data, left[2]);
+            int max = Math.max(root.data, right[3]);
+            return new int[]{1, size, min, max};
+        }
+        return new int[]{0, Math.max(left[1], right[1]), 0, 0};
+    }
+
+
+
 }
