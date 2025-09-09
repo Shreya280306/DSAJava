@@ -23,7 +23,7 @@ public class DynamicProgramming {
             return 1;
         }
         if (dpArray[n] == -1) {
-            return dpArray[n] = lucasNumbers(n - 1, dpArray) + lucasNumbers(n - 2, dpArray);
+             dpArray[n] = lucasNumbers(n - 1, dpArray) + lucasNumbers(n - 2, dpArray);
         }
         return dpArray[n];
     }

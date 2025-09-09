@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class BST {
     BtNode right;
@@ -618,6 +619,7 @@ Integer> arr, BtNode current, int[] count){
      *                             we have to traverse the list everytime to find the middle element. We will also have to traverse the list
      *                             twice to cut it into two parts since it can't just be cut like an array.
      * Alternate approach: We could also have put the elements of the linked list into an array and then solved like before- O(N)
+     * Leetcode: done
      * @param list
      * @return
      */
@@ -972,6 +974,133 @@ Integer> arr, BtNode current, int[] count){
             return new int[]{1, size, min, max};
         }
         return new int[]{0, Math.max(left[1], right[1]), 0, 0};
+    }
+
+    /**
+     * Approach: This problem can be done in two ways- first way is checking the left and right of the left node to the current we are at
+     *           and if that is null then cut the link between them same for the right too
+     *           Second approach is go in inorder traversal, if the left and right of the root is null then return null
+     * @param root
+     * @return
+     */
+    public BtNode removeAllLeafNodesFromBST1(BtNode root){
+        if(root == null){
+            return null;
+        }
+        if(root.left != null) {
+            if (root.left.left == null && root.left.right == null) {
+                root.left = null;
+            }
+        }
+        root.left = removeAllLeafNodesFromBST1(root.left);
+
+        if(root.right != null){
+            if(root.right.left == null && root.right.right == null){
+                root.right = null;
+            }
+        }
+        root.right = removeAllLeafNodesFromBST1(root.right);
+        return root;
+    }
+
+    public BtNode removeAllLeafNodes2(BtNode root){
+        if(root == null){
+            return null;
+        }
+        root.left = removeAllLeafNodes2(root.left);
+        if(root.left == null && root.right == null){
+            //root = null;
+            return null;
+        }
+        root.right = removeAllLeafNodes2(root.right);
+        return root;
+    }
+
+    /**
+     * Approach: Just put the bst into an array then find two sum like we used to do with two pointers in a sorted array
+     * @param root
+     * @param sum
+     * @return
+     */
+    public boolean twoSumInBST(BtNode root, int sum){
+        ArrayList<Integer> arr = new ArrayList<>();
+        creatingArrayOfBSTNodes(root, arr);
+        int start = 0;
+        int end = arr.size()-1;
+        while(start <= end) {
+            if (sum < arr.get(start) + arr.get(end)) {
+                end -= 1;
+            } else if (sum > arr.get(start) + arr.get(end)) {
+                start += 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Approach: Since we won't get a sorted array here, we traverse the elements and put each element into a hashset and then check
+     *           if the diff of the sum and root.data is present in the hashset. If it is we return true else false.
+     * @param root
+     * @param sum
+     * @param hash
+     * @return
+     */
+    public boolean twoSumInBinaryTree(BtNode root, int sum, HashSet<Integer> hash){
+        if(root == null){
+            return false;
+        }
+        twoSumInBinaryTree(root.left, sum, hash);
+        hash.add(root.data);
+        if(hash.contains(sum - root.data)){
+            return true;
+        }
+        return twoSumInBinaryTree(root.right, sum, hash);
+    }
+
+    /**
+     * Approach: Since we already know how to find the lca and paths just compare the paths putting the pointer at the lca in both the arrays
+     *           and find the max combining the elements of both the arrays containing the paths
+     * @param root
+     * @param n1
+     * @param n2
+     * @return
+     */
+    public int maxSumBetween2NodesOfBST(BtNode root, BtNode n1, BtNode n2){
+        ArrayList<Integer> arr1 = new ArrayList<>();
+        ArrayList<Integer> arr2 = new ArrayList<>();
+        notingPaths(root, arr1, n1);
+        notingPaths(root, arr2, n2);
+        int lca = lowestCommonAncestorBinaryTree(n1, n2, root);
+        int p1 = 0;
+        while(arr1.get(p1) != lca){
+            p1 += 1;
+        }
+        int p2 = 0;
+        while(arr2.get(p2) != lca){
+            p2 += 1;
+        }
+
+        int max = 0;
+        while(p1 != arr1.size() && p2 != arr2.size()){
+            int temp = Math.max(arr1.get(p1), arr2.get(p2));
+            max = Math.max(temp, max);
+            p1 += 1;
+            p2 += 1;
+        }
+
+        if(p1 != arr1.size()){
+            while(p1 != arr1.size()){
+                max = Math.max(arr1.get(p1), max);
+            }
+        }
+        if(p2 != arr2.size()){
+            while(p2 != arr2.size()){
+                max = Math.max(arr2.get(p2), max);
+            }
+        }
+        return max;
     }
 
 
